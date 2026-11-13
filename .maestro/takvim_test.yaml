@@ -1,0 +1,43 @@
+appId: net.buik.app
+name: Takvim Ekranı Testleri
+---
+
+# 1. Uygulama açılışı ve takvim ekranı yükleniyor mu
+- launchApp
+- assertVisible: "FEEL THE EXCELLENCE"    # splash
+- waitForAnimationToEnd
+- assertVisible: "TAKVİM"                  # takvim tab'ı açık gelmeli
+
+# 2. Ay başlığı görünüyor mu
+- assertVisible:
+    text: "2026"
+    enabled: true
+
+# 3. Sonraki aya geç (sağ ok)
+- tapOn:
+    id: "chevron_right"
+- waitForAnimationToEnd
+- assertNotVisible: "Haziran 2026"
+
+# 4. Önceki aya dön (sol ok)
+- tapOn:
+    id: "chevron_left"
+- waitForAnimationToEnd
+- assertVisible: "Haziran 2026"
+
+# 5. Bugünkü güne tıkla
+- tapOn: "29"
+- waitForAnimationToEnd
+
+# 6. Etkinlik yoksa boş mesaj görünmeli
+- assertVisible: "Bu gün için etkinlik yok."
+
+# 7. Başka bir güne tıkla
+- tapOn: "15"
+- waitForAnimationToEnd
+
+# 8. Alt tab'lara geçip takvime dönme
+- tapOn: "Duyurular"
+- assertVisible: "DUYURULAR"
+- tapOn: "Takvim"
+- assertVisible: "TAKVİM"
